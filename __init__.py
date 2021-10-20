@@ -3,7 +3,7 @@
 Function: to spell number by thai language
 input type: positive integers
 output type: string
-limitation: digits up to 10^18
+limitation: Trillion
 """
 
 def SpellNumTH(number):
@@ -18,6 +18,9 @@ def SpellNumTH(number):
             #! numberic is a must
             if not num.isnumeric():
                 raise Exception("Please enter only positive integers.")
+            #! <= 18 digits
+            if len(num) >= 18:
+                raise Exception("Please enter the number less than 18 digits")
         except Exception as e:
             print(e)
         else:
