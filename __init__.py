@@ -3,8 +3,14 @@
 Function: to spell number by thai language
 input type: positive integers
 output type: string
-limitation: Trillion
+limitation: Quintillion (10**18)
 """
+
+
+# Import module for playing voice
+from gtts import gTTS
+import os
+
 
 def SpellNumTH(number):
     # Validate input number
@@ -107,3 +113,11 @@ def SpellNumTH(number):
     word_mapped = list(map(lambda x,y: x+y, num_spell, num_place_value))
     word_concat = ''.join(word_mapped)
     return word_concat + 'บาท'
+
+
+def PlayVoice(text, language='th'):
+    text = text
+    language = language
+    voice = gTTS(text=text, lang=language, slow=False)
+    voice.save('voice.mp3')
+    os.system("start voice.mp3")
