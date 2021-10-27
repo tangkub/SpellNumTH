@@ -7,31 +7,27 @@ limitation: Quintillion (10**18)
 """
 
 
+
 # Import module for playing voice
 from gtts import gTTS
 import os
 
 
+
+# Function: number to text
 def SpellNumTH(number):
     # Validate input number
-    status = True
-    while status:
-        try:
-            num = str(number)
-            #! starting number must not be ZERO
-            if num[0] == '0':
-                raise Exception("Don't enter the number starting with ZERO.")
-            #! numberic is a must
-            if not num.isnumeric():
-                raise Exception("Please enter only positive integers.")
-            #! <= 18 digits
-            if len(num) >= 18:
-                raise Exception("Please enter the number less than 18 digits")
-        except Exception as e:
-            print(e)
-        else:
-            num_len = len(num)
-            status = False
+    try:
+        num = number
+        #! numeric is a must
+        if not (isinstance(num, int) or isinstance(num, float)):
+            raise Exception("Please enter only number.")
+        #! <= 18 digits
+        if len(str(num).split(".")[0]) >= 18:
+            raise Exception("Please enter the number less than 18 digits")
+    except Exception as e:
+        print(e)
+        return None
 
     # Define number spelling
     spelling = {
@@ -56,6 +52,22 @@ def SpellNumTH(number):
         2:'ร้อย',
         1:'สิบ'
     }
+
+    num = str(num)
+
+    # Split float number
+    float_state = False
+    if num.find('.') != -1:
+        float_state = True
+        num_float = num.split(".")[1] # get float number
+        num = num.split(".")[0] # get integer number
+
+        # find number spelling for float number
+        num_float_spell = ['จุด']
+        for i in num_float:
+            num_float_spell.append(spelling[i])
+
+    num_len = len(num)
 
     # Find place value and number of each digit
     num_place_value = []
@@ -111,10 +123,14 @@ def SpellNumTH(number):
 
     # Final result
     word_mapped = list(map(lambda x,y: x+y, num_spell, num_place_value))
+    if float_state:
+        word_mapped.extend(num_float_spell)
     word_concat = ''.join(word_mapped)
     return word_concat + 'บาท'
 
 
+
+# Function: text to speech
 def PlayVoice(text, language='th'):
     text = text
     language = language
