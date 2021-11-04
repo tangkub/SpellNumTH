@@ -1,12 +1,10 @@
 # SpellNumTH.py
 """
-Function: to spell number by thai language
-input type: positive integers
+Function: To spell number and play its voice by thai language
+input type: int or float
 output type: string
-limitation: Quintillion (10**18)
+limitation: 18 digits and 2 decimal places
 """
-
-
 
 # Import module for playing voice
 from gtts import gTTS
@@ -16,6 +14,7 @@ import os
 
 # Function: number to text
 def SpellNumTH(number):
+
     # Validate input number
     try:
         num = number
@@ -43,6 +42,20 @@ def SpellNumTH(number):
         '9':'เก้า'
     }
 
+    # Define number spelling for float number
+    spelling_float = {
+        '0':'ศูนย์',
+        '1':'หนึ่ง',
+        '2':'สอง',
+        '3':'สาม',
+        '4':'สี่',
+        '5':'ห้า',
+        '6':'หก',
+        '7':'เจ็ด',
+        '8':'แปด',
+        '9':'เก้า'
+    }
+
     # Define place value
     place_value = {
         6:'ล้าน',
@@ -53,20 +66,21 @@ def SpellNumTH(number):
         1:'สิบ'
     }
 
-    num = str(num)
-
     # Split float number
     float_state = False
-    if num.find('.') != -1:
+    if isinstance(num, float):
         float_state = True
+        num = round(num, 2)
+        num = str(num)
         num_float = num.split(".")[1] # get float number
         num = num.split(".")[0] # get integer number
 
         # find number spelling for float number
         num_float_spell = ['จุด']
         for i in num_float:
-            num_float_spell.append(spelling[i])
+            num_float_spell.append(spelling_float[i])
 
+    num = str(num)
     num_len = len(num)
 
     # Find place value and number of each digit
