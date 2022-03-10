@@ -10,8 +10,6 @@ limitation: 18 digits and 2 decimal places
 from gtts import gTTS
 import os
 
-
-
 # Function: number to text
 def SpellNumTH(number):
 
@@ -108,7 +106,7 @@ def SpellNumTH(number):
             else:
                 print('something wrong')
 
-    # Remove place value by number spelling is none
+    # Remove place value if number spelling is ''
     num_place_value.reverse()
     for i in range(num_len):
         # case: less than 1 million
