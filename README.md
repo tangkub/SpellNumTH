@@ -28,7 +28,7 @@ print(result)
 PlayVoice(result)
 ```
 
-## Key Learning points
+## Key Learning
 - Validation of user input by try-except keyword
 - Logic how to naturally spell the number in thai language
 - Usage of map and lambda together
